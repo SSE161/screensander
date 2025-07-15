@@ -23,11 +23,12 @@ async def send_screenshot_async():
         return
 
     screenshot = ImageGrab.grab()
-    screenshot.save("screen.png", quality=95)
+    buf = BytesIO()
+    screenshot.save(buf, format="PNG")
+    buf.seek(0)
 
-    with open("screen.png", "rb") as f:
-        await bot.send_photo(chat_id=chat_id, photo=f)
-        print("✅ Скриншот отправлен!")
+    await bot.send_photo(chat_id=chat_id, photo=f)
+    print("✅ Скриншот отправлен!")
 
 def send_screenshot():
     loop = event_loop_holder["loop"]
