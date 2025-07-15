@@ -7,9 +7,9 @@ from telegram import Bot, Update
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
 # Токен Telegram-бота
-TOKEN = "7589976422:AAF7CVws5u-ZwK4AwKaOIRFYc9zy3oeXMys"
+TOKEN = "your token"
 bot = Bot(token=TOKEN)
-gpt_token = "sk-yjuUapfY6t0JPwNPKMZcanIIsuvzRrb9"
+gpt_token = ""
 
 
 # Тут будет сохраняться chat_id
