@@ -7,7 +7,7 @@ from telegram import Bot, Update
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
 # Токен Telegram-бота
-TOKEN = "7589976422:AAFPazAfxMu6SXyNuhTVjkR0dD-sLaGJ01A"
+TOKEN = ""
 bot = Bot(token=TOKEN)
 
 
